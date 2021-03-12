@@ -1,8 +1,8 @@
 /**
- * Class describes car and contanins five fields
+ * Class describes car and contains five fields
  * for five different parameters
  * @author Dmytro Zykov
- * @version 1.1
+ * @version 1.11
  */
 
 public class Car {
@@ -24,12 +24,13 @@ public class Car {
             this.string = string;
         }
 
-        // Get the string equavalent of the enum value
+        // Get the string equivalent of the enum value
+        @Override
         public String toString() {
             return this.string;
         }
 
-        // Compare for equality of the given string and the string equavalent of the enum value
+        // Compare for equality of the given string and the string equivalent of the enum value
         public boolean stringEquals(String string) {
             return string.equals(this.string);
         }
@@ -50,12 +51,13 @@ public class Car {
             this.string = string;
         }
 
-        // Get the string equavalent of the enum value
+        // Get the string equivalent of the enum value
+        @Override
         public String toString() {
             return this.string;
         }
 
-        // Compare for equality of the given string and the string equavalent of the enum value
+        // Compare for equality of the given string and the string equivalent of the enum value
         public boolean stringEquals(String string) {
             return string.equals(this.string);
         }
@@ -81,7 +83,7 @@ public class Car {
     }
 
     /**
-     * Contrcutor with defined attributes
+     * Constructor with defined attributes
      * 
      * @param model the car model
      * @param bodyType the car body type
@@ -209,11 +211,7 @@ public class Car {
      * @param topSpeed the top speed in km/h
      */
     public void setTopSpeed(int topSpeed) {
-        if (topSpeed >= 0) {
-            this.topSpeed = topSpeed;
-        } else {
-            this.topSpeed = 0;
-        }
+        this.topSpeed = Math.max(topSpeed, 0);
     }
 
     /**
@@ -231,11 +229,7 @@ public class Car {
      * @param acceleration time to accelerate in seconds
      */
     public void setAcceleration(double acceleration) { 
-        if (acceleration >= 0) {
-            this.acceleration = acceleration;
-        } else {
-            this.acceleration = 0;
-        }
+        this.acceleration = Math.max(acceleration, 0);
     }
 
     /**
@@ -243,36 +237,30 @@ public class Car {
      * 
      * @return formated string containing object's all fields
      */
+    @Override
     public String toString() {
         return String.format("Model: %s\nBody type: %s\nFuel type: %s\nTop speed: %d\nAcceleration from 0 to 100 km/h: %f",
         this.model, this.bodyType.toString(), this.fuelType.toString(), this.topSpeed, this.acceleration);
     }
 
     /**
-     * Method that alphabetecally sorts the array of Car objects by model field {@link Car#model}
+     * Method that alphabetically sorts the array of Car objects by model field {@link Car#model}
      * 
      * @param array an array of Car objects
-     * @return sorted array of Car objects
      */
-    public static Car[] sortedByModel(Car[] array) {
-        // Creating an copy of an array
-        Car[] sorted = array.clone();
-
-        // Loppong through the array
-        for (int i = 0; i < sorted.length - 1; i++) {
-            Car current = sorted[i];
-            Car next = sorted[i+1];
+    public static void sortedByModel(Car[] array) {
+        // Looping through the array
+        for (int i = 0; i < array.length - 1; i++) {
+            Car current = array[i];
+            Car next = array[i+1];
             // Compare to elements
             if (current.getModel().compareTo(next.getModel()) > 0) {
                 // Swap if the first is bigger
-                Car temp = sorted[i];
-                sorted[i] = sorted[i+1];
-                sorted[i+1] = temp;
+                Car temp = array[i];
+                array[i] = array[i+1];
+                array[i+1] = temp;
             }
         }
-        
-        // return the sorted array
-        return sorted;
     }
 
     /**
@@ -281,21 +269,16 @@ public class Car {
      * @see Car#sortedByModel(Car[])
      * 
      * @param array an array of Car objects
-     * @return sorted array of Car objects
      */
-    public static Car[] sortedByTopSpeed(Car[] array) {
-        Car[] sorted = array.clone();
-        
-        for (int i = 0; i < sorted.length - 1; i++) {
-            Car current = sorted[i];
-            Car next = sorted[i+1];
+    public static void sortedByTopSpeed(Car[] array) {
+        for (int i = 0; i < array.length - 1; i++) {
+            Car current = array[i];
+            Car next = array[i+1];
             if (current.getTopSpeed() > next.getTopSpeed()) {
-                Car temp = sorted[i];
-                sorted[i] = sorted[i+1];
-                sorted[i+1] = temp;
+                Car temp = array[i];
+                array[i] = array[i+1];
+                array[i+1] = temp;
             }
         }
-        
-        return sorted;
     }
 }

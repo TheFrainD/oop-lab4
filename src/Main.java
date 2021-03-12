@@ -48,16 +48,15 @@ public class Main {
             cars[i] = new Car(model, bodyType, fuelType, topSpeed, acceleration);
         }
 
-        Car[] sortedByModel = Car.sortedByModel(cars);
-        Car[] sortedByTopSpeed = Car.sortedByTopSpeed(cars);
-
+        Car.sortedByModel(cars);
         System.out.println("\nArray sorted by model:");
-        for (Car car : sortedByModel) {
+        for (Car car : cars) {
             System.out.println(car.toString());
         }
 
+        Car.sortedByTopSpeed(cars);
         System.out.println("\nArray sorted by top speed:");
-        for (Car car : sortedByTopSpeed) {
+        for (Car car : cars) {
             System.out.println(car.toString());
         }
     }
