@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
@@ -14,7 +16,7 @@ public class Main {
             size = 0;
         }
 
-        Car[] cars = new Car[size];
+        ArrayList<Car> cars = new ArrayList<>();
 
         for (int i = 0; i < size; i++) {
             System.out.println("Car #" + (i + 1));
@@ -45,16 +47,16 @@ public class Main {
                 acceleration = 0;
             }
 
-            cars[i] = new Car(model, bodyType, fuelType, topSpeed, acceleration);
+            cars.add(new Car(model, bodyType, fuelType, topSpeed, acceleration));
         }
 
-        Car.sortedByModel(cars);
+        cars.sort(Car.compareByModel);
         System.out.println("\nArray sorted by model:");
         for (Car car : cars) {
             System.out.println(car.toString());
         }
 
-        Car.sortedByTopSpeed(cars);
+        cars.sort(Car.compareByTopSpeed);
         System.out.println("\nArray sorted by top speed:");
         for (Car car : cars) {
             System.out.println(car.toString());

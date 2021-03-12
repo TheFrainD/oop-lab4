@@ -1,13 +1,17 @@
+import java.util.Comparator;
+
 /**
  * Class describes car and contains five fields
  * for five different parameters
  * @author Dmytro Zykov
- * @version 1.11
+ * @version 1.2
  */
 
 public class Car {
 
+    // Enumerator describing types of body
     public enum BodyType {
+        // Body types with string equivalent
         NONE ("None"),
         HATCHBACK ("Hatchback"),
         SEDAN ("Sedan"),
@@ -36,7 +40,9 @@ public class Car {
         }
     }
 
+    // Enumerator describing types of fuel
     public enum FuelType {
+        // Fuel types with string equivalent
         NONE ("None"),
         PETROL ("Petrol"),
         DIESEL ("Diesel"),
@@ -67,11 +73,17 @@ public class Car {
     private String model;
     private BodyType bodyType;
     private FuelType fuelType;
-    private int topSpeed;
+    private Integer topSpeed;
     private double acceleration;
 
+    // Comparator that lexicographically compares the model name of two car objects
+    public static Comparator<Car> compareByModel = Comparator.comparing(Car::getModel);
+
+    // Comparator that compares the top speed of two car objects
+    public static Comparator<Car> compareByTopSpeed = Comparator.comparing(Car::getTopSpeed);
+
     /**
-     * Constructor with no attributes
+     * Default constructor
      * @see Car#Car(String, String, String, int, double)
      */
     Car() {
@@ -83,7 +95,7 @@ public class Car {
     }
 
     /**
-     * Constructor with defined attributes
+     * Constructor with parameters
      * 
      * @param model the car model
      * @param bodyType the car body type
@@ -111,11 +123,12 @@ public class Car {
 
     /**
      * Method to set car's model name {@link Car#model}
+     * If given string is empty sets the model name to "NONE"
      * 
      * @param model the name of car
      */
     public void setModel(String model) {
-
+        // If given string us
         if (model.length() == 0) {
             this.model = "NONE";
         } else {
@@ -156,7 +169,7 @@ public class Car {
             }
         }
 
-        // If not set body type to NONE
+        // If input doesn't have any corresponding string sets the body type to "NONE"
         this.bodyType = BodyType.NONE;
     }
 
@@ -186,13 +199,16 @@ public class Car {
      * @param fuelType fuel type
      */
     public void setFuelType(String fuelType) {
+        // Loop through the enum values
         for (FuelType element : FuelType.values()) {
+            // Check if there is such a value
             if (element.stringEquals(fuelType)) {
                 this.fuelType = element;
                 return;
             }
         }
 
+        // If input doesn't have any corresponding string sets the fuel type to "NONE"
         this.fuelType = FuelType.NONE;
     }
 
@@ -201,7 +217,7 @@ public class Car {
      * 
      * @return the top speed in km/h
      */
-    public int getTopSpeed() {
+    public Integer getTopSpeed() {
         return this.topSpeed;
     }
 
@@ -211,6 +227,7 @@ public class Car {
      * @param topSpeed the top speed in km/h
      */
     public void setTopSpeed(int topSpeed) {
+        // If given number less then 0 assigns 0 to the field
         this.topSpeed = Math.max(topSpeed, 0);
     }
 
@@ -228,57 +245,19 @@ public class Car {
      * 
      * @param acceleration time to accelerate in seconds
      */
-    public void setAcceleration(double acceleration) { 
+    public void setAcceleration(double acceleration) {
+        // If given number less then 0 assigns 0 to the field
         this.acceleration = Math.max(acceleration, 0);
     }
 
     /**
      * Method that converts Car type to string value
      * 
-     * @return formated string containing object's all fields
+     * @return formatted string containing object's all fields
      */
     @Override
     public String toString() {
         return String.format("Model: %s\nBody type: %s\nFuel type: %s\nTop speed: %d\nAcceleration from 0 to 100 km/h: %f",
         this.model, this.bodyType.toString(), this.fuelType.toString(), this.topSpeed, this.acceleration);
-    }
-
-    /**
-     * Method that alphabetically sorts the array of Car objects by model field {@link Car#model}
-     * 
-     * @param array an array of Car objects
-     */
-    public static void sortedByModel(Car[] array) {
-        // Looping through the array
-        for (int i = 0; i < array.length - 1; i++) {
-            Car current = array[i];
-            Car next = array[i+1];
-            // Compare to elements
-            if (current.getModel().compareTo(next.getModel()) > 0) {
-                // Swap if the first is bigger
-                Car temp = array[i];
-                array[i] = array[i+1];
-                array[i+1] = temp;
-            }
-        }
-    }
-
-    /**
-     * Method that sorts the array of Car objects by the top speed {@link Car#topSpeed}
-     * Works the same way as sortedByModel method
-     * @see Car#sortedByModel(Car[])
-     * 
-     * @param array an array of Car objects
-     */
-    public static void sortedByTopSpeed(Car[] array) {
-        for (int i = 0; i < array.length - 1; i++) {
-            Car current = array[i];
-            Car next = array[i+1];
-            if (current.getTopSpeed() > next.getTopSpeed()) {
-                Car temp = array[i];
-                array[i] = array[i+1];
-                array[i+1] = temp;
-            }
-        }
     }
 }
